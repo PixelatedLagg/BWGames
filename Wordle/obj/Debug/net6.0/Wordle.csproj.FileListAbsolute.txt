@@ -1,0 +1,15 @@
+C:\Users\pixil\Desktop\BWGames\Wordle\bin\Debug\net6.0\Wordle.exe
+C:\Users\pixil\Desktop\BWGames\Wordle\bin\Debug\net6.0\Wordle.deps.json
+C:\Users\pixil\Desktop\BWGames\Wordle\bin\Debug\net6.0\Wordle.runtimeconfig.json
+C:\Users\pixil\Desktop\BWGames\Wordle\bin\Debug\net6.0\Wordle.dll
+C:\Users\pixil\Desktop\BWGames\Wordle\bin\Debug\net6.0\Wordle.pdb
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.csproj.AssemblyReference.cache
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.AssemblyInfoInputs.cache
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.AssemblyInfo.cs
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.csproj.CoreCompileInputs.cache
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.dll
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\refint\Wordle.dll
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.pdb
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\Wordle.genruntimeconfig.cache
+C:\Users\pixil\Desktop\BWGames\Wordle\obj\Debug\net6.0\ref\Wordle.dll
