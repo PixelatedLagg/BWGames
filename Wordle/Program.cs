@@ -64,7 +64,7 @@
             Console.WriteLine($"The word was \"{target}\".");
         }
         Console.WriteLine("Play again? (y or n)");
-        char c = Console.ReadKey().KeyChar;
+        char c = Console.ReadKey(true).KeyChar;
         Console.Clear();
         if (c == 'y' || c == 'Y')
         {
