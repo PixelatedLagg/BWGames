@@ -24,11 +24,10 @@
             {
                 if (currentTetromino[i].Item2 == 19 || (board[currentTetromino[i].Item1, currentTetromino[i].Item2 + 1] != '.' && !currentTetromino.Contains((currentTetromino[i].Item1, currentTetromino[i].Item2 + 1))))
                 {
-                    if (board[position, 0] != '.')
+                    if (board[position, 0] != '.' || !NewTetromino())
                     {
                         goto GameOver;
                     }
-                    NewTetromino();
                 }
             }
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -233,7 +232,6 @@
         switch (random.Next(0, 6))
         {
             case 0:
-            case 1:
             case 2:
             case 3:
             case 4:
@@ -244,25 +242,52 @@
                 currentTetromino[1] = (position, 1);
                 currentTetromino[2] = (position, 2);
                 currentTetromino[3] = (position, 3);
-                Console.WriteLine(position);
                 board[position, 0] = '#';
                 board[position, 1] = '#';
                 board[position, 2] = '#';
                 board[position, 3] = '#';
                 currentRotation = 0;
                 return true;
-            /*case 1:
+            case 1:
+                if ((position == 9 && board[8, 2] != '.') || (position == 0 && board[1, 0] != '.'))
+                {
+                    return false;
+                }
+                if (position == 9)
+                {
+                    currentTetromino[0] = (9, 0);
+                    currentTetromino[1] = (9, 1);
+                    currentTetromino[2] = (9, 2);
+                    currentTetromino[3] = (8, 2);
+                    board[9, 0] = '&';
+                    board[9, 1] = '&';
+                    board[9, 2] = '&';
+                    board[8, 2] = '&';
+                    return true;
+                }
+                if (position == 0)
+                {
+                    currentTetromino[0] = (0, 0);
+                    currentTetromino[1] = (1, 0);
+                    currentTetromino[2] = (0, 1);
+                    currentTetromino[3] = (0, 2);
+                    board[0, 0] = '&';
+                    board[1, 0] = '&';
+                    board[0, 1] = '&';
+                    board[0, 2] = '&';
+                    return true;
+                }
                 currentSymbol = '&';
                 currentTetromino[0] = (position, 0);
                 currentTetromino[1] = (position, 1);
-                currentTetromino[2] = (position, 2);
-                currentTetromino[3] = (position, 3);
+                currentTetromino[2] = (position + 1, 1);
+                currentTetromino[3] = (position, 2);
                 board[position, 0] = '&';
                 board[position, 1] = '&';
+                board[position + 1, 1] = '&';
                 board[position, 2] = '&';
-                board[position, 3] = '&';
-                break;
-            case 2:
+                return true;
+            /*case 2:
                 currentSymbol = '@';
                 break;
             case 3:
