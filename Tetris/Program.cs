@@ -7,6 +7,8 @@
     static int lines = 0;
     static int position = 4;
     static int currentRotation = 0;
+    static char[,] tetrominosBoard = new char[6, 10];
+    static int[] nextTetrominos = new int[3];
     public static async Task Main()
     {
         for (int i = 0; i < 10; i++)
@@ -215,21 +217,9 @@
             }
         }
     }
-    static void Render()
-    {
-        Console.Clear();
-        for (int i = 0; i < 4; i++)
-        {
-            board[currentTetromino[i].Item1, currentTetromino[i].Item2] = currentSymbol;
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
-        }
-    }
     static bool NewTetromino()
     {
-        switch (random.Next(0, 6))
+        switch (GetNextTetromino())
         {
             case 0:
             case 2:
@@ -253,6 +243,7 @@
                 {
                     return false;
                 }
+                currentSymbol = '&';
                 if (position == 9)
                 {
                     currentTetromino[0] = (9, 0);
@@ -263,6 +254,7 @@
                     board[9, 1] = '&';
                     board[9, 2] = '&';
                     board[8, 2] = '&';
+                    currentRotation = 0;
                     return true;
                 }
                 if (position == 0)
@@ -275,9 +267,10 @@
                     board[1, 0] = '&';
                     board[0, 1] = '&';
                     board[0, 2] = '&';
+                    currentRotation = 2;
                     return true;
                 }
-                currentSymbol = '&';
+                //if (board[])
                 currentTetromino[0] = (position, 0);
                 currentTetromino[1] = (position, 1);
                 currentTetromino[2] = (position + 1, 1);
@@ -305,7 +298,84 @@
         }
         return false;
     }
-    static async Task<ConsoleKeyInfo> ReadKeyAsync(CancellationToken cancellationToken, int responsiveness = 100)
+    static int GetNextTetromino()
+    {
+        int result = nextTetrominos[0];
+        nextTetrominos[0] = nextTetrominos[1];
+        nextTetrominos[1] = nextTetrominos[2];
+        nextTetrominos[2] = random.Next(0, 6);
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                tetrominosBoard[i, j] = '.';
+            }
+        }
+        int position = 1;
+        foreach (int tetromino in nextTetrominos)
+        {
+            switch (tetromino)
+            {
+                case 0:
+                    tetrominosBoard[1, position] = '#';
+                    tetrominosBoard[2, position] = '#';
+                    tetrominosBoard[3, position] = '#';
+                    tetrominosBoard[4, position] = '#';
+                    position += 3;
+                    break;
+                case 1:
+                    tetrominosBoard[1, position] = '&';
+                    position++;
+                    tetrominosBoard[1, position] = '&';
+                    tetrominosBoard[2, position] = '&';
+                    tetrominosBoard[3, position] = '&';
+                    position += 2;
+                    break;
+                case 2:
+                    tetrominosBoard[3, position] = '@';
+                    position++;
+                    tetrominosBoard[1, position] = '@';
+                    tetrominosBoard[2, position] = '@';
+                    tetrominosBoard[3, position] = '@';
+                    position += 2;
+                    break;
+                case 3:
+                    tetrominosBoard[1, position] = '?';
+                    tetrominosBoard[2, position] = '?';
+                    position++;
+                    tetrominosBoard[1, position] = '?';
+                    tetrominosBoard[2, position] = '?';
+                    position += 2;
+                    break;
+                case 4:
+                    tetrominosBoard[2, position] = '$';
+                    tetrominosBoard[3, position] = '$';
+                    position++;
+                    tetrominosBoard[1, position] = '$';
+                    tetrominosBoard[2, position] = '$';
+                    position += 2;
+                    break;
+                case 5:
+                    tetrominosBoard[1, position] = 'x';
+                    tetrominosBoard[2, position] = 'x';
+                    position++;
+                    tetrominosBoard[2, position] = 'x';
+                    tetrominosBoard[3, position] = 'x';
+                    position += 2;
+                    break;
+                case 6:
+                    tetrominosBoard[2, position] = 'x';
+                    position++;
+                    tetrominosBoard[1, position] = 'x';
+                    tetrominosBoard[2, position] = 'x';
+                    tetrominosBoard[3, position] = 'x';
+                    position += 2;
+                    break;
+            }
+        }
+        return result;
+    }
+    static async Task<ConsoleKeyInfo> ReadKeyAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -315,7 +385,7 @@
                 {
                     return Console.ReadKey(true);
                 }
-                await Task.Delay(responsiveness, cancellationToken);
+                await Task.Delay(100, cancellationToken);
             }
         }
         catch
@@ -324,17 +394,34 @@
         }
         return default;
     }
+    static void Render()
+    {
+        Console.Clear();
+        for (int j = 0; j < 4; j++)
+        {
+            board[currentTetromino[j].Item1, currentTetromino[j].Item2] = currentSymbol;
+        }
+        int i = 0;
+        for (; i < 10; i++)
+        {
+            Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}    {tetrominosBoard[0, i]} {tetrominosBoard[1, i]} {tetrominosBoard[2, i]} {tetrominosBoard[3, i]} {tetrominosBoard[4, i]} {tetrominosBoard[5, i]}");
+        }
+        for (; i < 20; i++)
+        {
+            Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
+        }
+    }
 }
 
 /*
 
-#  #  #  #
+# # # #
 
 &
-&  &  &
+& & &
 
-      @
-@  @  @
+    @
+@ @ @
 
 ?  ?
 ?  ?
@@ -342,10 +429,22 @@
    $  $
 $  $
 
-   =
-=  =  =
-
 x  x
    x  x
 
+   =
+=  =  =
+*/
+
+/*
+. . . . . .
+. # # # # .
+. . . . . .
+. . . . . .
+. & . . . .
+. & & & . .
+. . . . . .
+. ? ? . . .
+. ? ? . . .
+. . . . . .
 */
