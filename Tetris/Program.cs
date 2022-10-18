@@ -270,7 +270,6 @@
                     currentRotation = 2;
                     return true;
                 }
-                //if (board[])
                 currentTetromino[0] = (position, 0);
                 currentTetromino[1] = (position, 1);
                 currentTetromino[2] = (position + 1, 1);
