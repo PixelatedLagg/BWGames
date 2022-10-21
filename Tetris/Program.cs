@@ -26,7 +26,7 @@
             {
                 if (currentTetromino[i].Item2 == 19 || (board[currentTetromino[i].Item1, currentTetromino[i].Item2 + 1] != '.' && !currentTetromino.Contains((currentTetromino[i].Item1, currentTetromino[i].Item2 + 1))))
                 {
-                    if (board[position, 0] != '.' || !NewTetromino())
+                    if (!NewTetromino())
                     {
                         goto GameOver;
                     }
@@ -222,78 +222,340 @@
         switch (GetNextTetromino())
         {
             case 0:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                currentSymbol = '#';
-                currentTetromino[0] = (position, 0);
-                currentTetromino[1] = (position, 1);
-                currentTetromino[2] = (position, 2);
-                currentTetromino[3] = (position, 3);
-                board[position, 0] = '#';
-                board[position, 1] = '#';
-                board[position, 2] = '#';
-                board[position, 3] = '#';
-                currentRotation = 0;
-                return true;
-            case 1:
-                if ((position == 9 && board[8, 2] != '.') || (position == 0 && board[1, 0] != '.'))
-                {
-                    return false;
-                }
-                currentSymbol = '&';
-                if (position == 9)
-                {
-                    currentTetromino[0] = (9, 0);
-                    currentTetromino[1] = (9, 1);
-                    currentTetromino[2] = (9, 2);
-                    currentTetromino[3] = (8, 2);
-                    board[9, 0] = '&';
-                    board[9, 1] = '&';
-                    board[9, 2] = '&';
-                    board[8, 2] = '&';
-                    currentRotation = 0;
-                    return true;
-                }
                 if (position == 0)
                 {
+                    if (board[0, 0] == '.' || board[0, 1] == '.' || board[0, 2] == '.'|| board[0, 3] == '.')
+                    {
+                        return false;
+                    }
                     currentTetromino[0] = (0, 0);
                     currentTetromino[1] = (1, 0);
-                    currentTetromino[2] = (0, 1);
-                    currentTetromino[3] = (0, 2);
-                    board[0, 0] = '&';
-                    board[1, 0] = '&';
-                    board[0, 1] = '&';
-                    board[0, 2] = '&';
-                    currentRotation = 2;
-                    return true;
+                    currentTetromino[2] = (2, 0);
+                    currentTetromino[3] = (3, 0);
                 }
-                currentTetromino[0] = (position, 0);
-                currentTetromino[1] = (position, 1);
-                currentTetromino[2] = (position + 1, 1);
-                currentTetromino[3] = (position, 2);
-                board[position, 0] = '&';
-                board[position, 1] = '&';
-                board[position + 1, 1] = '&';
-                board[position, 2] = '&';
+                else if (position == 9)
+                {
+                    if (board[0, 0] == '.' || board[0, 1] == '.' || board[0, 2] == '.'|| board[0, 3] == '.')
+                    {
+                        return false;
+                    }
+                    position = 7;
+                    currentTetromino[0] = (6, 0);
+                    currentTetromino[1] = (7, 0);
+                    currentTetromino[2] = (8, 0);
+                    currentTetromino[3] = (9, 0);
+                }
+                else
+                {
+                    if (board[position - 1, 0] == '.' || board[position, 0] == '.' || board[position + 1, 0] == '.' || board[position + 2, 0] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position - 1, 0);
+                    currentTetromino[1] = (position, 0);
+                    currentTetromino[2] = (position + 1, 0);
+                    currentTetromino[3] = (position + 2, 0);
+                    board[position - 1, 0] = '#';
+                    board[position, 0] = '#';
+                    board[position + 1, 0] = '#';
+                    board[position + 2, 0] = '#';
+                }
+                currentRotation = 0;
+                currentSymbol = '#';
                 return true;
-            /*case 2:
+            case 1:
+                if (position == 0)
+                {
+                    if (board[0, 0] == '.' || board[0, 1] == '.' || board[1, 1] == '.' || board[2, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (0, 0);
+                    currentTetromino[1] = (0, 1);
+                    currentTetromino[2] = (1, 1);
+                    currentTetromino[3] = (2, 1);
+                    board[0, 0] = '&';
+                    board[0, 1] = '&';
+                    board[1, 1] = '&';
+                    board[2, 1] = '&';
+                }
+                else if (position == 9)
+                {
+                    if (board[7, 0] == '.' || board[7, 1] == '.' || board[8, 1] == '.' || board[9, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (7, 0);
+                    currentTetromino[1] = (7, 1);
+                    currentTetromino[2] = (8, 1);
+                    currentTetromino[3] = (9, 1);
+                    board[7, 0] = '&';
+                    board[7, 1] = '&';
+                    board[8, 1] = '&';
+                    board[9, 1] = '&';
+                }
+                else
+                {
+                    if (board[position - 1, 0] == '.' || board[position - 1, 1] == '.' || board[position, 1] == '.' || board[position + 1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position - 1, 0);
+                    currentTetromino[1] = (position - 1, 1);
+                    currentTetromino[2] = (position, 1);
+                    currentTetromino[3] = (position + 1, 1);
+                    board[position - 1, 0] = '&';
+                    board[position - 1, 1] = '&';
+                    board[position, 1] = '&';
+                    board[position + 1, 1] = '&';
+                }
+                currentRotation = 0;
+                currentSymbol = '&';
+                return true;
+            case 2:
+                if (position == 0)
+                {
+                    if (board[2, 0] == '.' || board[2, 1] == '.' || board[1, 1] == '.' || board[0, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (2, 0);
+                    currentTetromino[1] = (2, 1);
+                    currentTetromino[2] = (1, 1);
+                    currentTetromino[3] = (0, 1);
+                    board[2, 0] = '@';
+                    board[2, 1] = '@';
+                    board[1, 1] = '@';
+                    board[0, 1] = '@';
+                }
+                else if (position == 9)
+                {
+                    if (board[9, 0] == '.' || board[9, 1] == '.' || board[8, 1] == '.' || board[7, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (9, 0);
+                    currentTetromino[1] = (9, 1);
+                    currentTetromino[2] = (8, 1);
+                    currentTetromino[3] = (7, 1);
+                    board[9, 0] = '@';
+                    board[9, 1] = '@';
+                    board[8, 1] = '@';
+                    board[7, 1] = '@';
+                }
+                else
+                {
+                    if (board[position + 1, 0] == '.' || board[position + 1, 1] == '.' || board[position, 1] == '.' || board[position - 1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position + 1, 0);
+                    currentTetromino[1] = (position + 1, 1);
+                    currentTetromino[2] = (position, 1);
+                    currentTetromino[3] = (position - 1, 1);
+                    board[position + 1, 0] = '@';
+                    board[position + 1, 1] = '@';
+                    board[position, 1] = '@';
+                    board[position - 1, 1] = '@';
+                }
+                currentRotation = 0;
                 currentSymbol = '@';
-                break;
+                return true;
             case 3:
+                if (position == 0)
+                {
+                    if (board[0, 0] == '.' || board[0, 1] == '.' || board[1, 0] == '.' || board[1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (0, 0);
+                    currentTetromino[1] = (0, 1);
+                    currentTetromino[2] = (1, 0);
+                    currentTetromino[3] = (1, 1);
+                    board[0, 0] = '?';
+                    board[0, 1] = '?';
+                    board[1, 0] = '?';
+                    board[1, 1] = '?';
+                }
+                else if (position == 9)
+                {
+                    if (board[8, 0] == '.' || board[8, 1] == '.' || board[9, 0] == '.' || board[9, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (8, 0);
+                    currentTetromino[1] = (8, 1);
+                    currentTetromino[2] = (9, 0);
+                    currentTetromino[3] = (9, 1);
+                    board[8, 0] = '?';
+                    board[8, 1] = '?';
+                    board[9, 0] = '?';
+                    board[9, 1] = '?';
+                }
+                else
+                {
+                    if (board[position - 1, 0] == '.' || board[position - 1, 1] == '.' || board[position, 0] == '.' || board[position, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position - 1, 0);
+                    currentTetromino[1] = (position - 1, 1);
+                    currentTetromino[2] = (position, 0);
+                    currentTetromino[3] = (position, 1);
+                    board[position - 1, 0] = '?';
+                    board[position - 1, 1] = '?';
+                    board[position, 0] = '?';
+                    board[position, 1] = '?';
+                }
                 currentSymbol = '?';
                 break;
             case 4:
+                if (position == 0)
+                {
+                    if (board[2, 0] == '.' || board[1, 0] == '.' || board[1, 1] == '.' || board[0, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (2, 0);
+                    currentTetromino[1] = (1, 0);
+                    currentTetromino[2] = (1, 1);
+                    currentTetromino[3] = (0, 1);
+                    board[2, 0] = '$';
+                    board[1, 0] = '$';
+                    board[1, 1] = '$';
+                    board[0, 1] = '$';
+                }
+                else if (position == 9)
+                {
+                    if (board[9, 0] == '.' || board[8, 0] == '.' || board[8, 1] == '.' || board[7, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (9, 0);
+                    currentTetromino[1] = (8, 0);
+                    currentTetromino[2] = (8, 1);
+                    currentTetromino[3] = (7, 1);
+                    board[9, 0] = '$';
+                    board[8, 0] = '$';
+                    board[8, 1] = '$';
+                    board[7, 1] = '$';
+                }
+                else
+                {
+                    if (board[position + 1, 0] == '.' || board[position, 0] == '.' || board[position, 1] == '.' || board[position - 1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position + 1, 0);
+                    currentTetromino[1] = (position, 0);
+                    currentTetromino[2] = (position, 1);
+                    currentTetromino[3] = (position - 1, 1);
+                    board[position + 1, 0] = '$';
+                    board[position, 0] = '$';
+                    board[position, 1] = '$';
+                    board[position - 1, 1] = '$';
+                }
+                currentRotation = 0;
                 currentSymbol = '$';
                 break;
             case 5:
+                if (position == 0)
+                {
+                    if (board[0, 0] == '.' || board[1, 0] == '.' || board[1, 1] == '.' || board[2, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (0, 0);
+                    currentTetromino[1] = (1, 0);
+                    currentTetromino[2] = (1, 1);
+                    currentTetromino[3] = (2, 1);
+                    board[0, 0] = '=';
+                    board[1, 0] = '=';
+                    board[1, 1] = '=';
+                    board[2, 1] = '=';
+                }
+                else if (position == 9)
+                {
+                    if (board[7, 0] == '.' || board[8, 0] == '.' || board[8, 1] == '.' || board[9, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (7, 0);
+                    currentTetromino[1] = (8, 0);
+                    currentTetromino[2] = (8, 1);
+                    currentTetromino[3] = (9, 1);
+                    board[7, 0] = '=';
+                    board[8, 0] = '=';
+                    board[8, 1] = '=';
+                    board[9, 1] = '=';
+                }
+                else
+                {
+                    if (board[position - 1, 0] == '.' || board[position, 0] == '.' || board[position, 1] == '.' || board[position + 1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position - 1, 0);
+                    currentTetromino[1] = (position, 0);
+                    currentTetromino[2] = (position, 1);
+                    currentTetromino[3] = (position + 1, 1);
+                    board[position - 1, 0] = '=';
+                    board[position, 0] = '=';
+                    board[position, 1] = '=';
+                    board[position + 1, 1] = '=';
+                }
+                currentRotation = 0;
                 currentSymbol = '=';
                 break;
             case 6:
+                if (position == 0)
+                {
+                    if (board[0, 1] == '.' || board[1, 0] == '.' || board[1, 1] == '.' || board[2, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (0, 1);
+                    currentTetromino[1] = (1, 0);
+                    currentTetromino[2] = (1, 1);
+                    currentTetromino[3] = (2, 1);
+                    board[0, 1] = 'x';
+                    board[1, 0] = 'x';
+                    board[1, 1] = 'x';
+                    board[2, 1] = 'x';
+                }
+                else if (position == 9)
+                {
+                    if (board[7, 1] == '.' || board[8, 0] == '.' || board[8, 1] == '.' || board[9, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (7, 1);
+                    currentTetromino[1] = (8, 0);
+                    currentTetromino[2] = (8, 1);
+                    currentTetromino[3] = (9, 1);
+                    board[7, 1] = 'x';
+                    board[8, 0] = 'x';
+                    board[8, 1] = 'x';
+                    board[9, 1] = 'x';
+                }
+                else
+                {
+                    if (board[position - 1, 1] == '.' || board[position, 0] == '.' || board[position, 1] == '.' || board[position + 1, 1] == '.')
+                    {
+                        return false;
+                    }
+                    currentTetromino[0] = (position - 1, 1);
+                    currentTetromino[1] = (position, 0);
+                    currentTetromino[2] = (position, 1);
+                    currentTetromino[3] = (position + 1, 1);
+                    board[position - 1, 1] = 'x';
+                    board[position, 0] = 'x';
+                    board[position, 1] = 'x';
+                    board[position + 1, 1] = 'x';
+                }
+                currentRotation = 0;
                 currentSymbol = 'x';
-                break;*/
+                break;
         }
         return false;
     }
@@ -363,11 +625,11 @@
                     position += 2;
                     break;
                 case 6:
-                    tetrominosBoard[2, position] = 'x';
+                    tetrominosBoard[2, position] = '=';
                     position++;
-                    tetrominosBoard[1, position] = 'x';
-                    tetrominosBoard[2, position] = 'x';
-                    tetrominosBoard[3, position] = 'x';
+                    tetrominosBoard[1, position] = '=';
+                    tetrominosBoard[2, position] = '=';
+                    tetrominosBoard[3, position] = '=';
                     position += 2;
                     break;
             }
