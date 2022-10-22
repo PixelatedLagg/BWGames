@@ -19,6 +19,9 @@
             }
         }
         currentSymbol = '.';
+        nextTetrominos[0] = random.Next(0, 7);
+        nextTetrominos[1] = random.Next(0, 7);
+        nextTetrominos[2] = random.Next(0, 7);
         NewTetromino();
         while (true)
         {
@@ -39,18 +42,20 @@
                 ConsoleKey input = (await ReadKeyAsync(cancellationTokenSource.Token)).Key;
                 switch (input)
                 {
-                    case ConsoleKey.LeftArrow:
+                    case ConsoleKey.LeftArrow: //unable to when 4
                     case ConsoleKey.A:
                         int i = 0;
                         for (; i < 4; i++)
                         {
                             if (currentTetromino[i].Item1 == 0 || (board[currentTetromino[i].Item1 - 1, currentTetromino[i].Item2] != '.' && !currentTetromino.Contains((currentTetromino[i].Item1 - 1, currentTetromino[i].Item2))))
                             {
+                                Console.WriteLine($"broke from {currentTetromino[i].Item1},  {currentTetromino[i].Item2}");
                                 break;
                             }
                         }
                         if (i != 4)
                         {
+                            Console.WriteLine("cant move left!");
                             break;
                         }
                         position--;
@@ -65,18 +70,20 @@
                         }
                         Render();
                         break;
-                    case ConsoleKey.RightArrow:
+                    case ConsoleKey.RightArrow: //unable to when 13
                     case ConsoleKey.D:
                         int j = 0;
                         for (; j < 4; j++)
                         {
                             if (currentTetromino[j].Item1 == 9 || (board[currentTetromino[j].Item1 + 1, currentTetromino[j].Item2] != '.' && !currentTetromino.Contains((currentTetromino[j].Item1 + 1, currentTetromino[j].Item2))))
                             {
+                                Console.WriteLine($"broke from {currentTetromino[j].Item1},  {currentTetromino[j].Item2}");
                                 break;
                             }
                         }
                         if (j != 4)
                         {
+                            Console.WriteLine("cant move right!");
                             break;
                         }
                         position++;
@@ -214,6 +221,7 @@
             if (c == 'y' || c == 'Y')
             {
                 await Main();
+                return;
             }
         }
     }
@@ -564,7 +572,7 @@
         int result = nextTetrominos[0];
         nextTetrominos[0] = nextTetrominos[1];
         nextTetrominos[1] = nextTetrominos[2];
-        nextTetrominos[2] = random.Next(0, 6);
+        nextTetrominos[2] = random.Next(0, 7);
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -634,6 +642,7 @@
                     break;
             }
         }
+        Console.WriteLine($"new tet: {result}");
         return result;
     }
     static async Task<ConsoleKeyInfo> ReadKeyAsync(CancellationToken cancellationToken)
@@ -671,6 +680,7 @@
         {
             Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
         }
+        Console.WriteLine(position);
     }
 }
 
