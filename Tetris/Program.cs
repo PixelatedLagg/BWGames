@@ -29,7 +29,6 @@
             {
                 if (current[i].Item2 == 19 || (board[current[i].Item1, current[i].Item2 + 1] != '.' && !current.Contains((current[i].Item1, current[i].Item2 + 1))))
                 {
-                    for 
                     if (!NewTetromino())
                     {
                         goto GameOver;
