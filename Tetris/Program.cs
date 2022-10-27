@@ -58,10 +58,7 @@
                             break;
                         }
                         position--;
-                        for (i = 0; i < 4; i++)
-                        {
-                            board[current[i].Item1, current[i].Item2] = '.';
-                        }
+                        Clear();
                         for (i = 0; i < 4; i++)
                         {
                             current[i].Item1--;
@@ -84,10 +81,7 @@
                             break;
                         }
                         position++;
-                        for (j = 0; j < 4; j++)
-                        {
-                            board[current[j].Item1, current[j].Item2] = '.';
-                        }
+                        Clear();
                         for (j = 0; j < 4; j++)
                         {
                             current[j].Item1++;
@@ -110,10 +104,7 @@
                             {
                                 break;
                             }
-                            for (d = 0; d < 4; d++)
-                            {
-                                board[current[d].Item1, current[d].Item2] = '.';
-                            }
+                            Clear();
                             for (d = 0; d < 4; d++)
                             {
                                 current[d].Item2++;
@@ -122,22 +113,25 @@
                         }
                         goto CallRender;
                     case ConsoleKey.UpArrow:
+                    case ConsoleKey.W:
                         switch (currentSymbol)
                         {
                             case '#':
                                 switch (currentRotation)
                                 {
                                     case 0:
-                                        if (current[0].Item2 == 0 || current[0].Item2 > 17 || board[current[0].Item1 + 2, current[0].Item2 - 1] != '.' || board[current[1].Item1 + 1, current[1].Item2] != '.' || board[current[2].Item1, current[2].Item2 + 1] != '.' || board[current[3].Item1 - 1, current[3].Item2 + 2] != '.')
+                                        if (current[0].Item2 == 0 || current[0].Item2 > 17 || Full(current[0].Item1 + 2, current[0].Item2 - 1) || Full(current[1].Item1 + 1, current[1].Item2) || Full(current[2].Item1, current[2].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 + 2))
                                         {
                                             break;
                                         }
+                                        Clear();
                                         current[0].Item1 += 2;
                                         current[0].Item2--;
                                         current[1].Item1++;
                                         current[2].Item2++;
                                         current[3].Item1--;
                                         current[3].Item2 += 2;
+                                        Update();
                                         position++;
                                         currentRotation = 1;
                                         break;
@@ -146,12 +140,14 @@
                                         {
                                             break;
                                         }
+                                        Clear();
                                         current[0].Item1 -= 2;
                                         current[0].Item2 += 2;
                                         current[1].Item1--;
                                         current[1].Item2++;
                                         current[3].Item1++;
                                         current[3].Item2--;
+                                        Update();
                                         position--;
                                         currentRotation = 2;
                                         break;
@@ -160,9 +156,14 @@
                                         {
                                             break;
                                         }
+                                        Clear();
+
+                                        Update();
+                                        position++;
                                         currentRotation = 3;
                                         break;
                                     case 3:
+                                        currentRotation = 0;
                                         break;
                                 }
                                 break;
@@ -179,6 +180,7 @@
                             case 'x':
                                 break;
                         }
+                        Render();
                         break;
                 }
             }
@@ -195,6 +197,32 @@
             {
                 Render();
             }
+            foreach ((int, int) position in current)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (board[i, position.Item2] == '.')
+                    {
+                        goto end;
+                    }
+                }
+                for (int i = position.Item2 - 1; i > 0; i--)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        board[j, i + 1] = board[j, i];
+                    }
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    board[i, 0] = '.';
+                }
+                lines++;
+                end:
+                {
+                    continue;
+                }
+            }
         }
         GameOver:
         {
@@ -206,6 +234,20 @@
                 await Main();
                 return;
             }
+        }
+    }
+    static void Clear()
+    {
+        foreach ((int, int) position in current)
+        {
+            board[position.Item1, position.Item2] = '.';
+        }
+    }
+    static void Update()
+    {
+        foreach ((int, int) position in current)
+        {
+            board[position.Item1, position.Item2] = currentSymbol;
         }
     }
     static bool NewTetromino()
@@ -656,6 +698,22 @@
         {
             Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
         }
+        Console.WriteLine($"Lines Completed: {lines}");
+    }
+    static bool Full(int x, int y)
+    {
+        if (board[x, y] == '.')
+        {
+            return false;
+        }
+        foreach ((int, int) position in current)
+        {
+            if (position == (x, y))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
