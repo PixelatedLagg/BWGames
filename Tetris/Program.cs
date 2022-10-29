@@ -159,15 +159,27 @@
                                         Clear();
                                         current[0].Item1 += 1;
                                         current[0].Item2 -= 2;
+                                        current[1].Item2--;
+                                        current[2].Item1--;
+                                        current[3].Item1 -= 2;
+                                        current[3].Item2--;
+                                        Update();
+                                        position--;
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[0].Item1 == 9 || current[0].Item1 < 2 || board[current[0].Item1 - 2, current[0].Item2 + 2] != '.' || board[current[1].Item1 - 1, current[1].Item2 + 1] != '.' || board[current[3].Item1 + 1, current[3].Item2 - 1] != '.')
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 -= 2;
+                                        current[0].Item2 += 2;
                                         current[1].Item1--;
                                         current[1].Item2++;
                                         current[3].Item1++;
                                         current[3].Item2--;
                                         Update();
-                                        position++;
-                                        currentRotation = 3;
-                                        break;
-                                    case 3:
                                         currentRotation = 0;
                                         break;
                                 }
