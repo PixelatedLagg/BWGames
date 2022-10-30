@@ -136,7 +136,7 @@
                                         currentRotation = 1;
                                         break;
                                     case 1:
-                                        if (current[0].Item1 == 9 || current[0].Item1 < 2 || board[current[0].Item1 - 2, current[0].Item2 + 2] != '.' || board[current[1].Item1 - 1, current[1].Item2 + 1] != '.' || board[current[3].Item1 + 1, current[3].Item2 - 1] != '.')
+                                        if (current[0].Item1 == 9 || current[0].Item1 < 2 || Full(current[0].Item1 - 2, current[0].Item2 + 2) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 + 1, current[3].Item2 - 1))
                                         {
                                             break;
                                         }
@@ -148,53 +148,349 @@
                                         current[3].Item1++;
                                         current[3].Item2--;
                                         Update();
-                                        position--;
                                         currentRotation = 2;
                                         break;
                                     case 2:
-                                        if (current[0].Item2 < 2 || current[0].Item2 == 19 || board[current[0].Item1 - 2, current[0].Item2 + 2] != '.' || board[current[1].Item1 - 1, current[1].Item2 + 1] != '.' || board[current[3].Item1 + 1, current[3].Item2 - 1] != '.')
+                                        if (current[0].Item2 < 2 || current[0].Item2 == 19 || Full(current[0].Item1 + 1, current[0].Item2 - 2) || Full(current[1].Item1, current[1].Item2 - 1) || Full(current[2].Item1 - 1, current[2].Item2) || Full(current[3].Item1 - 2, current[3].Item2 + 1))
                                         {
                                             break;
                                         }
                                         Clear();
-                                        current[0].Item1 += 1;
+                                        current[0].Item1++;
                                         current[0].Item2 -= 2;
                                         current[1].Item2--;
                                         current[2].Item1--;
                                         current[3].Item1 -= 2;
-                                        current[3].Item2--;
+                                        current[3].Item2++;
                                         Update();
                                         position--;
                                         currentRotation = 3;
                                         break;
                                     case 3:
-                                        if (current[0].Item1 == 9 || current[0].Item1 < 2 || board[current[0].Item1 - 2, current[0].Item2 + 2] != '.' || board[current[1].Item1 - 1, current[1].Item2 + 1] != '.' || board[current[3].Item1 + 1, current[3].Item2 - 1] != '.')
+                                        if (current[0].Item1 == 0 || current[0].Item1 > 7 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 - 1) || Full(current[3].Item1 + 2, current[3].Item2 - 2))
                                         {
                                             break;
                                         }
                                         Clear();
-                                        current[0].Item1 -= 2;
-                                        current[0].Item2 += 2;
-                                        current[1].Item1--;
-                                        current[1].Item2++;
-                                        current[3].Item1++;
-                                        current[3].Item2--;
+                                        current[0].Item1--;
+                                        current[0].Item2++;
+                                        current[2].Item1++;
+                                        current[2].Item2--;
+                                        current[3].Item1 += 2;
+                                        current[3].Item2 -= 2;
                                         Update();
                                         currentRotation = 0;
                                         break;
                                 }
                                 break;
                             case '&':
+                                switch (currentRotation)
+                                {
+                                    case 0:
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1 + 2, current[0].Item2) || Full(current[1].Item1 + 1, current[1].Item2 - 1) || Full(current[3].Item1 - 1, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 += 2;
+                                        current[1].Item1++;
+                                        current[1].Item2--;
+                                        current[3].Item1--;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 1;
+                                        break;
+                                    case 1:
+                                        if (current[2].Item1 == 0 || Full(current[0].Item1, current[0].Item2 + 2) || Full(current[1].Item1 + 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item2 += 2;
+                                        current[1].Item1++;
+                                        current[1].Item2++;
+                                        current[3].Item1--;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 2;
+                                        break;
+                                    case 2:
+                                        if (current[2].Item2 == 0 || Full(current[0].Item1, current[0].Item2 - 2) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 + 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 -= 2;
+                                        current[1].Item1--;
+                                        current[1].Item2++;
+                                        current[3].Item1++;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[2].Item1 == 9 || Full(current[0].Item1, current[0].Item2 - 2) || Full(current[1].Item1 - 1, current[1].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item2 -= 2;
+                                        current[1].Item1--;
+                                        current[1].Item2--;
+                                        current[3].Item1++;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 0;
+                                        break;
+                                }
                                 break;
                             case '@':
-                                break;
-                            case '?':
+                                switch (currentRotation)
+                                {
+                                    case 0:
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1, current[0].Item2 + 2) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 + 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item2 += 2;
+                                        current[1].Item1--;
+                                        current[1].Item2++;
+                                        current[3].Item1++;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 1;
+                                        break;
+                                    case 1:
+                                        if (current[2].Item1 == 0 || Full(current[0].Item1 - 1, current[0].Item2) || Full(current[1].Item1 - 1, current[1].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 -= 2;
+                                        current[1].Item1--;
+                                        current[1].Item2--;
+                                        current[3].Item1++;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 2;
+                                        break;
+                                    case 2:
+                                        if (current[2].Item2 == 0 || Full(current[0].Item1, current[0].Item2 - 2) || Full(current[1].Item1 + 1, current[1].Item2 - 1) || Full(current[3].Item1 - 1, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item2 -= 2;
+                                        current[1].Item1++;
+                                        current[1].Item2--;
+                                        current[3].Item1--;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[2].Item1 == 9 || Full(current[0].Item1 + 2, current[0].Item2) || Full(current[1].Item1 + 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 += 2;
+                                        current[1].Item1++;
+                                        current[1].Item2++;
+                                        current[3].Item1--;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 0;
+                                        break;
+                                }
                                 break;
                             case '$':
+                                switch (currentRotation)
+                                {
+                                    case 0:
+                                        if (current[1].Item2 == 0 || Full(current[0].Item1 - 2, current[0].Item2 - 1) || Full(current[1].Item1 - 1, current[1].Item2) || Full(current[2].Item1, current[2].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 -= 2;
+                                        current[0].Item2--;
+                                        current[1].Item1--;
+                                        current[2].Item2--;
+                                        current[3].Item1++;
+                                        Update();
+                                        currentRotation = 1;
+                                        break;
+                                    case 1:
+                                        if (current[2].Item1 == 9 || Full(current[0].Item1 + 2, current[0].Item2) || Full(current[1].Item1 + 1, current[1].Item2 - 1) || Full(current[3].Item1 - 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 += 2;
+                                        current[1].Item1++;
+                                        current[1].Item2--;
+                                        current[3].Item1--;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 2;
+                                        break;
+                                    case 2:
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1 - 1, current[0].Item2) || Full(current[1].Item1, current[1].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2) || Full(current[3].Item1 + 2, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1--;
+                                        current[1].Item2++;
+                                        current[2].Item1++;
+                                        current[3].Item1 += 2;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[1].Item1 == 0 || Full(current[0].Item1 + 1, current[0].Item2 + 1) || Full(current[2].Item1 - 1, current[2].Item2 + 1) || Full(current[3].Item1 - 2, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1++;
+                                        current[0].Item2++;
+                                        current[2].Item1--;
+                                        current[2].Item2++;
+                                        current[3].Item1 -= 2;
+                                        Update();
+                                        currentRotation = 0;
+                                        break;
+                                }
                                 break;
                             case '=':
+                                switch (currentRotation)
+                                {
+                                    case 0:
+                                        if (current[1].Item2 == 0 || Full(current[0].Item1 + 2, current[0].Item2 - 1) || Full(current[1].Item1 + 1, current[1].Item2) || Full(current[2].Item1, current[2].Item2 - 1) || Full(current[3].Item1 - 1, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 += 2;
+                                        current[0].Item2--;
+                                        current[1].Item1++;
+                                        current[2].Item2--;
+                                        current[3].Item1--;
+                                        Update();
+                                        currentRotation = 1;
+                                        break;
+                                    case 1:
+                                        if (current[2].Item1 == 0 || Full(current[0].Item1 - 2, current[0].Item2) || Full(current[1].Item1 - 1, current[1].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2 - 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1 -= 2;
+                                        current[1].Item1--;
+                                        current[1].Item2--;
+                                        current[3].Item1++;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 2;
+                                        break;
+                                    case 2:
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1 + 1, current[0].Item2) || Full(current[1].Item1, current[1].Item2 + 1) || Full(current[2].Item1 - 1, current[2].Item2) || Full(current[3].Item1 - 2, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1++;
+                                        current[1].Item2++;
+                                        current[2].Item1--;
+                                        current[3].Item1 -= 2;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[1].Item1 == 9 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1--;
+                                        current[0].Item2++;
+                                        current[2].Item1++;
+                                        current[2].Item2++;
+                                        current[3].Item1 += 2;
+                                        Update();
+                                        currentRotation = 0;
+                                        break;
+                                }
                                 break;
                             case 'x':
+                                switch (currentRotation)
+                                {
+                                    case 0:
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1 + 1, current[0].Item2 - 1) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 + 1))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1++;
+                                        current[0].Item2--;
+                                        current[1].Item1--;
+                                        current[1].Item2++;
+                                        current[3].Item1--;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 1;
+                                        break;
+                                    case 1:
+                                        if (current[2].Item1 == 0 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1++;
+                                        current[0].Item2++;
+                                        current[1].Item1--;
+                                        current[1].Item2++;
+                                        current[3].Item1--;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 2;
+                                        break;
+                                    case 2:
+                                        if (current[2].Item2 == 0 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1--;
+                                        current[0].Item2++;
+                                        current[1].Item1--;
+                                        current[1].Item2--;
+                                        current[3].Item1++;
+                                        current[3].Item2--;
+                                        Update();
+                                        currentRotation = 3;
+                                        break;
+                                    case 3:
+                                        if (current[2].Item1 == 19 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        {
+                                            break;
+                                        }
+                                        Clear();
+                                        current[0].Item1--;
+                                        current[0].Item2--;
+                                        current[1].Item1++;
+                                        current[1].Item2--;
+                                        current[3].Item1++;
+                                        current[3].Item2++;
+                                        Update();
+                                        currentRotation = 0;
+                                        break;
+                                }
                                 break;
                         }
                         Render();
@@ -715,7 +1011,7 @@
         {
             Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
         }
-        Console.WriteLine($"Lines Completed: {lines}");
+        Console.WriteLine($"Lines Completed: {lines} pos: {position}");
     }
     static bool Full(int x, int y)
     {
@@ -730,6 +1026,7 @@
                 return false;
             }
         }
+        Console.WriteLine("full!!!!!");
         return true;
     }
 }
