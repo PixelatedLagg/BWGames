@@ -1,0 +1,15 @@
+C:\Users\pixil\Desktop\BWGames\RPS\bin\Debug\net6.0\RPS.exe
+C:\Users\pixil\Desktop\BWGames\RPS\bin\Debug\net6.0\RPS.deps.json
+C:\Users\pixil\Desktop\BWGames\RPS\bin\Debug\net6.0\RPS.runtimeconfig.json
+C:\Users\pixil\Desktop\BWGames\RPS\bin\Debug\net6.0\RPS.dll
+C:\Users\pixil\Desktop\BWGames\RPS\bin\Debug\net6.0\RPS.pdb
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.csproj.AssemblyReference.cache
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.AssemblyInfoInputs.cache
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.AssemblyInfo.cs
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.csproj.CoreCompileInputs.cache
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.dll
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\refint\RPS.dll
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.pdb
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\RPS.genruntimeconfig.cache
+C:\Users\pixil\Desktop\BWGames\RPS\obj\Debug\net6.0\ref\RPS.dll

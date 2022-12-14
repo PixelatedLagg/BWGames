@@ -18,7 +18,6 @@
                 board[i, j] = '.';
             }
         }
-        currentSymbol = '.';
         nextTetrominos[0] = random.Next(0, 7);
         nextTetrominos[1] = random.Next(0, 7);
         nextTetrominos[2] = random.Next(0, 7);
@@ -111,6 +110,7 @@
                                 board[current[d].Item1, current[d].Item2] = currentSymbol;
                             }
                         }
+                        await Task.Delay(500);
                         goto CallRender;
                     case ConsoleKey.UpArrow:
                     case ConsoleKey.W:
@@ -366,7 +366,7 @@
                                         break;
                                 }
                                 break;
-                            case '=':
+                            case 'x':
                                 switch (currentRotation)
                                 {
                                     case 0:
@@ -427,18 +427,18 @@
                                         break;
                                 }
                                 break;
-                            case 'x':
+                            case '=':
                                 switch (currentRotation)
                                 {
                                     case 0:
-                                        if (current[2].Item2 == 19 || Full(current[0].Item1 + 1, current[0].Item2 - 1) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 + 1))
+                                        if (current[2].Item2 == 19 || Full(current[0].Item1 + 1, current[0].Item2 - 1) || Full(current[1].Item1 + 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 + 1))
                                         {
                                             break;
                                         }
                                         Clear();
                                         current[0].Item1++;
                                         current[0].Item2--;
-                                        current[1].Item1--;
+                                        current[1].Item1++;
                                         current[1].Item2++;
                                         current[3].Item1--;
                                         current[3].Item2++;
@@ -446,7 +446,7 @@
                                         currentRotation = 1;
                                         break;
                                     case 1:
-                                        if (current[2].Item1 == 0 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        if (current[2].Item1 == 0 || Full(current[0].Item1 + 1, current[0].Item2 + 1) || Full(current[1].Item1 - 1, current[1].Item2 + 1) || Full(current[3].Item1 - 1, current[3].Item2 - 1))
                                         {
                                             break;
                                         }
@@ -461,7 +461,7 @@
                                         currentRotation = 2;
                                         break;
                                     case 2:
-                                        if (current[2].Item2 == 0 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        if (current[2].Item2 == 0 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[1].Item1 - 1, current[1].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2 - 1))
                                         {
                                             break;
                                         }
@@ -476,7 +476,7 @@
                                         currentRotation = 3;
                                         break;
                                     case 3:
-                                        if (current[2].Item1 == 19 || Full(current[0].Item1 - 1, current[0].Item2 + 1) || Full(current[2].Item1 + 1, current[2].Item2 + 1) || Full(current[3].Item1 + 2, current[3].Item2))
+                                        if (current[2].Item1 == 19 || Full(current[0].Item1 - 1, current[0].Item2 - 1) || Full(current[1].Item1 + 1, current[1].Item2 - 1) || Full(current[3].Item1 + 1, current[3].Item2 + 1))
                                         {
                                             break;
                                         }
@@ -539,12 +539,15 @@
         }
         GameOver:
         {
-            Console.WriteLine($"You've completed {lines} {(lines == 1 ? "line" : "lines")}!\nPlay again? (y or n)");
+            Console.WriteLine("Play again? (y or n)");
             char c = Console.ReadKey(true).KeyChar;
             Console.Clear();
             if (c == 'y' || c == 'Y')
             {
                 await Main();
+                current = new (int, int)[4];
+                lines = 0;
+                position = 4;
                 return;
             }
         }
@@ -809,10 +812,10 @@
                     current[1] = (1, 0);
                     current[2] = (1, 1);
                     current[3] = (2, 1);
-                    board[0, 0] = '=';
-                    board[1, 0] = '=';
-                    board[1, 1] = '=';
-                    board[2, 1] = '=';
+                    board[0, 0] = 'x';
+                    board[1, 0] = 'x';
+                    board[1, 1] = 'x';
+                    board[2, 1] = 'x';
                 }
                 else if (position == 9)
                 {
@@ -824,10 +827,10 @@
                     current[1] = (8, 0);
                     current[2] = (8, 1);
                     current[3] = (9, 1);
-                    board[7, 0] = '=';
-                    board[8, 0] = '=';
-                    board[8, 1] = '=';
-                    board[9, 1] = '=';
+                    board[7, 0] = 'x';
+                    board[8, 0] = 'x';
+                    board[8, 1] = 'x';
+                    board[9, 1] = 'x';
                 }
                 else
                 {
@@ -839,13 +842,13 @@
                     current[1] = (position, 0);
                     current[2] = (position, 1);
                     current[3] = (position + 1, 1);
-                    board[position - 1, 0] = '=';
-                    board[position, 0] = '=';
-                    board[position, 1] = '=';
-                    board[position + 1, 1] = '=';
+                    board[position - 1, 0] = 'x';
+                    board[position, 0] = 'x';
+                    board[position, 1] = 'x';
+                    board[position + 1, 1] = 'x';
                 }
                 currentRotation = 0;
-                currentSymbol = '=';
+                currentSymbol = 'x';
                 break;
             case 6:
                 if (position == 0)
@@ -858,10 +861,10 @@
                     current[1] = (1, 0);
                     current[2] = (1, 1);
                     current[3] = (2, 1);
-                    board[0, 1] = 'x';
-                    board[1, 0] = 'x';
-                    board[1, 1] = 'x';
-                    board[2, 1] = 'x';
+                    board[0, 1] = '=';
+                    board[1, 0] = '=';
+                    board[1, 1] = '=';
+                    board[2, 1] = '=';
                 }
                 else if (position == 9)
                 {
@@ -873,10 +876,10 @@
                     current[1] = (8, 0);
                     current[2] = (8, 1);
                     current[3] = (9, 1);
-                    board[7, 1] = 'x';
-                    board[8, 0] = 'x';
-                    board[8, 1] = 'x';
-                    board[9, 1] = 'x';
+                    board[7, 1] = '=';
+                    board[8, 0] = '=';
+                    board[8, 1] = '=';
+                    board[9, 1] = '=';
                 }
                 else
                 {
@@ -888,13 +891,13 @@
                     current[1] = (position, 0);
                     current[2] = (position, 1);
                     current[3] = (position + 1, 1);
-                    board[position - 1, 1] = 'x';
-                    board[position, 0] = 'x';
-                    board[position, 1] = 'x';
-                    board[position + 1, 1] = 'x';
+                    board[position - 1, 1] = '=';
+                    board[position, 0] = '=';
+                    board[position, 1] = '=';
+                    board[position + 1, 1] = '=';
                 }
                 currentRotation = 0;
-                currentSymbol = 'x';
+                currentSymbol = '=';
                 break;
         }
         return true;
@@ -1011,7 +1014,7 @@
         {
             Console.WriteLine($" {board[0, i]} {board[1, i]} {board[2, i]} {board[3, i]} {board[4, i]} {board[5, i]} {board[6, i]} {board[7, i]} {board[8, i]} {board[9, i]}");
         }
-        Console.WriteLine($"Lines Completed: {lines} pos: {position}");
+        Console.WriteLine($"Lines Completed: {lines}");
     }
     static bool Full(int x, int y)
     {
@@ -1026,7 +1029,6 @@
                 return false;
             }
         }
-        Console.WriteLine("full!!!!!");
         return true;
     }
 }
