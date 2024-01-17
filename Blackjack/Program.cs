@@ -11,7 +11,6 @@ public class Program
     public static List<string> AICards = [];
     public static void Main()
     {
-
         if (OperatingSystem.IsWindows()) //buffer height is windows only
         {
             Console.BufferHeight = 100;
