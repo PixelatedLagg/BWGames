@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Tetris
 {
     public static class Piece
@@ -60,6 +62,16 @@ namespace Tetris
         {
             Pieces[] pieces = (Pieces[])Enum.GetValues(typeof(Pieces));
             return pieces[random.Next(0, 7)];
+        }
+        public static (int, int)[] Rotate((int, int)[] piece, int currentRotation, int x, int y)
+        {
+            (int, int)[] result = new (int, int)[4];
+            for (int i = 0; i < 4; i++)
+            {
+                result[i].Item1 = -1 * (piece[i].Item2 - y) + x;
+                result[i].Item2 = piece[i].Item1 - x + y;
+            }
+            return result;
         }
     }
 

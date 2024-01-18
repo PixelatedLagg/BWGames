@@ -5,9 +5,11 @@ namespace Tetris
     {
         static ConsoleColor currentColor;
         static (int, int)[] currentPiece = new (int, int)[4];
+        static int currentRotation = 0;
         static readonly (int, int)[][] nextPieces = new (int, int)[3][];
         static int cursorTop, cursorLeftSide, cursorBottom;
-        static readonly int cursorLeftMain = 10; //10 = width (20 cells)
+        static int x, y;
+        static readonly int cursorLeftMain = 5; //10 = width (20 cells)
         public static async Task Main()
         {
             if (OperatingSystem.IsWindows()) //buffer height is windows only
@@ -15,11 +17,13 @@ namespace Tetris
                 Console.BufferHeight = 100;
             }
             cursorTop = Console.CursorTop;
-            cursorLeftSide = cursorLeftMain * 2 + 4;
+            cursorLeftSide = cursorLeftMain * 4 + 4;
             cursorBottom = cursorTop + 20; //20 = height
-            for (int i = 0; i < 20; i++)
+            x = cursorLeftMain;
+            y = cursorTop;
+            for (int i = cursorTop; i < cursorBottom; i++)
             {
-                Console.CursorTop++;
+                Console.CursorTop = i;
                 Console.CursorLeft = 0;
                 Console.Write('|');
             }
@@ -27,21 +31,20 @@ namespace Tetris
             Console.CursorLeft = 0;
             Console.Write($"x - - - - - - - - - -x");
             Console.CursorTop = cursorTop;
-            for (int i = 0; i < 20; i++)
+            for (int i = cursorTop; i < cursorBottom; i++)
             {
-                Console.CursorTop++;
-                Console.CursorLeft = cursorLeftMain * 2 + 1;
+                Console.CursorTop = i;
+                Console.CursorLeft = 4 * cursorLeftMain + 1;
                 Console.Write('|');
             }
-            Console.CursorTop = cursorTop + 30;
             NewPiece();
             RenderPiece();
-            return;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.CursorTop = cursorTop + 23 + debugList;
             for (int i = 0; i < 3; i++)
             {
                 nextPieces[i] = Piece.GetCoords(cursorLeftSide, cursorLeftSide, Piece.Random());
             }
-
             while (true)
             {
                 CancellationTokenSource cancellationTokenSource = new();
@@ -65,16 +68,26 @@ namespace Tetris
                             break;
                         case ConsoleKey.UpArrow: //ROTATE
                         case ConsoleKey.W:
+                            currentRotation++;
+                            currentPiece = Piece.Rotate(currentPiece, currentRotation, x, y);
                             break;
                     }
                 }
-                
+                for (int i = 0; i < 4; i++)
+                {
+                    Console.SetCursorPosition(currentPiece[i].Item1 * 2, currentPiece[i].Item2);
+                    Console.Write(' ');
+                    currentPiece[i] = (currentPiece[i].Item1, currentPiece[i].Item2 + 1);
+                    y++;
+                }
+                RenderPiece();
             }
+            return;
         }
         static void NewPiece()
         {
             Pieces pieces = Piece.Random();
-            currentPiece = Piece.GetCoords(cursorTop, cursorLeftMain, pieces);
+            currentPiece = Piece.GetCoords(cursorLeftMain, cursorTop, pieces);
             currentColor = (ConsoleColor)(int)pieces;
         }
         static void RenderPiece()
@@ -105,6 +118,18 @@ namespace Tetris
                 return default;
             }
             return default;
+        }
+        static int debugList = 0;
+        public static void Debug(string text, ConsoleColor color = ConsoleColor.Gray)
+        {
+            ConsoleColor previous = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            debugList++;
+            int previousTop = Console.CursorTop, previousLeft = Console.CursorLeft;
+            Console.SetCursorPosition(0, cursorTop + 22 + debugList);
+            Console.WriteLine(text);
+            Console.SetCursorPosition(previousLeft, previousTop);
+            Console.ForegroundColor = previous;
         }
     }
 
