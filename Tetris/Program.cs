@@ -56,6 +56,7 @@ namespace Tetris
                     {
                         case ConsoleKey.LeftArrow: //LEFT
                         case ConsoleKey.A:
+
                             break;
                         case ConsoleKey.RightArrow: //RIGHT
                         case ConsoleKey.D:
@@ -69,17 +70,35 @@ namespace Tetris
                         case ConsoleKey.UpArrow: //ROTATE
                         case ConsoleKey.W:
                             currentRotation++;
-                            currentPiece = Piece.Rotate(currentPiece, currentRotation, x, y);
+                            (int, int)[] result = Piece.Rotate(currentPiece, x, y);
+                            if (Piece.InBounds(result))
+                            {
+                                ClearPiece();
+                                Console.SetCursorPosition(x * 2, y);
+                                currentPiece = result;
+                                RenderPiece();
+                            }
                             break;
                     }
                 }
-                for (int i = 0; i < 4; i++)
+                bool onGround = false;
+                foreach ((int currentX, int currentY) in currentPiece)
                 {
-                    Console.SetCursorPosition(currentPiece[i].Item1 * 2, currentPiece[i].Item2);
-                    Console.Write(' ');
-                    currentPiece[i] = (currentPiece[i].Item1, currentPiece[i].Item2 + 1);
-                    y++;
+                    if (currentY == 19)
+                    {
+                        onGround = true;
+                        break;
+                    }
                 }
+                if (onGround)
+                {
+                    NewPiece();
+                    RenderPiece();
+                    continue; //skip going down
+                }
+                ClearPiece();
+                Console.SetCursorPosition(x * 2, y);
+                y++;
                 RenderPiece();
             }
             return;
@@ -90,11 +109,28 @@ namespace Tetris
             currentPiece = Piece.GetCoords(cursorLeftMain, cursorTop, pieces);
             currentColor = (ConsoleColor)(int)pieces;
         }
+        static void ClearPiece()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (currentPiece[i].Item2 < cursorTop) //buffer zone
+                {
+                    continue;
+                }
+                Console.SetCursorPosition(currentPiece[i].Item1 * 2, currentPiece[i].Item2);
+                Console.Write(' ');
+                currentPiece[i] = (currentPiece[i].Item1, currentPiece[i].Item2 + 1);
+            }
+        }
         static void RenderPiece()
         {
             Console.ForegroundColor = currentColor;
             foreach ((int x, int y) in currentPiece)
             {
+                if (y < cursorTop) //buffer zone
+                {
+                    continue;
+                }
                 Console.SetCursorPosition(x * 2, y);
                 Console.Write('#');
             }
@@ -131,6 +167,7 @@ namespace Tetris
             Console.SetCursorPosition(previousLeft, previousTop);
             Console.ForegroundColor = previous;
         }
+        public static void Debug (object obj, ConsoleColor color = ConsoleColor.Gray) => Debug(obj.ToString(), color);
     }
 
     /*
