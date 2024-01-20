@@ -10,6 +10,8 @@ namespace Tetris
         static int cursorTop, cursorLeftSide, cursorBottom;
         static int x, y;
         static readonly int cursorLeftMain = 5; //10 = width (20 cells)
+        static HashSet<(int, int)> positionsTaken = new();
+
         public static async Task Main()
         {
             if (OperatingSystem.IsWindows()) //buffer height is windows only
@@ -56,16 +58,99 @@ namespace Tetris
                     {
                         case ConsoleKey.LeftArrow: //LEFT
                         case ConsoleKey.A:
-
+                            bool verify = true;
+                            foreach ((int currentX, int currentY) in currentPiece)
+                            {
+                                if (currentX == 2)
+                                {
+                                    verify = false;
+                                    break;
+                                }
+                            }
+                            if (verify)
+                            {
+                                x--;
+                                (int, int)[] temp = currentPiece;
+                                ClearPiece();
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    currentPiece[i] = (temp[i].Item1 - 1, temp[i].Item2);
+                                }
+                                RenderPiece();
+                            }
                             break;
                         case ConsoleKey.RightArrow: //RIGHT
                         case ConsoleKey.D:
+                            verify = true;
+                            foreach ((int currentX, int currentY) in currentPiece)
+                            {
+                                if (currentX == 11)
+                                {
+                                    verify = false;
+                                    break;
+                                }
+                            }
+                            if (verify)
+                            {
+                                x++;
+                                (int, int)[] temp = currentPiece;
+                                ClearPiece();
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    currentPiece[i] = (temp[i].Item1 + 1, temp[i].Item2);
+                                }
+                                RenderPiece();
+                            }
                             break;
                         case ConsoleKey.DownArrow: //DOWN
                         case ConsoleKey.S:
+                            verify = true;
+                            foreach ((int currentX, int currentY) in currentPiece)
+                            {
+                                if (currentY == 20)
+                                {
+                                    verify = false;
+                                    break;
+                                }
+                            }
+                            if (verify)
+                            {
+                                y++;
+                                (int, int)[] temp = currentPiece;
+                                ClearPiece();
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    currentPiece[i] = (temp[i].Item1, temp[i].Item2 + 1);
+                                }
+                                RenderPiece();
+                            }
                             break;
                         case ConsoleKey.Spacebar: //SPAM DOWN
-                            await Task.Delay(500);
+                            int yTotal = 0;
+                            verify = true;
+                            while (verify)
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    if (currentPiece[i].Item2 + yTotal == 20 || positionsTaken.Contains((currentPiece[i].Item1, currentPiece[i].Item2 + yTotal)))
+                                    {
+                                        verify = false;
+                                        break;
+                                    }
+                                }
+                                yTotal++;
+                            }
+                            if (yTotal == 0)
+                            {
+                                break;
+                            }
+                            (int, int)[] tempYTotal = currentPiece;
+                            ClearPiece();
+                            for (int i = 0; i < 4; i++)
+                            {
+                                currentPiece[i] = (tempYTotal[i].Item1, tempYTotal[i].Item2 + yTotal);
+                            }
+                            RenderPiece();
                             break;
                         case ConsoleKey.UpArrow: //ROTATE
                         case ConsoleKey.W:
@@ -84,7 +169,7 @@ namespace Tetris
                 bool onGround = false;
                 foreach ((int currentX, int currentY) in currentPiece)
                 {
-                    if (currentY == 19)
+                    if (currentY == 20 || positionsTaken.Contains((currentX, currentY + 1)))
                     {
                         onGround = true;
                         break;
@@ -92,6 +177,10 @@ namespace Tetris
                 }
                 if (onGround)
                 {
+                    foreach ((int currentX, int currentY) in currentPiece)
+                    {
+                        positionsTaken.Add((currentX, currentY));
+                    }
                     NewPiece();
                     RenderPiece();
                     continue; //skip going down
