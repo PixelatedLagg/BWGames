@@ -11,7 +11,7 @@ namespace Tetris
                 case Pieces.Line:
                     for (int i = 0; i < 4; i++)
                     {
-                        result[i] = (x - i, y);
+                        result[i] = (x + i - 1, y);
                     }
                     break;
                 case Pieces.FrontL:

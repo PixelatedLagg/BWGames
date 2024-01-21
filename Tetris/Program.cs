@@ -5,7 +5,6 @@ namespace Tetris
     {
         static ConsoleColor currentColor;
         static (int, int)[] currentPiece = new (int, int)[4];
-        static int currentRotation = 0;
         static readonly (int, int)[][] nextPieces = new (int, int)[3][];
         static int cursorTop, cursorLeftSide, cursorBottom;
         static int x, y;
@@ -14,7 +13,7 @@ namespace Tetris
 
         public static async Task Main()
         {
-            if (OperatingSystem.IsWindows()) //buffer height is windows only
+            if (OperatingSystem.IsWindows()) //buffer size is windows only
             {
                 Console.BufferHeight = 100;
             }
@@ -61,7 +60,7 @@ namespace Tetris
                             bool verify = true;
                             foreach ((int currentX, int currentY) in currentPiece)
                             {
-                                if (currentX == 2)
+                                if (currentX == 1)
                                 {
                                     verify = false;
                                     break;
@@ -70,11 +69,10 @@ namespace Tetris
                             if (verify)
                             {
                                 x--;
-                                (int, int)[] temp = currentPiece;
                                 ClearPiece();
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    currentPiece[i] = (temp[i].Item1 - 1, temp[i].Item2);
+                                    currentPiece[i] = (currentPiece[i].Item1 - 1, currentPiece[i].Item2);
                                 }
                                 RenderPiece();
                             }
@@ -84,7 +82,7 @@ namespace Tetris
                             verify = true;
                             foreach ((int currentX, int currentY) in currentPiece)
                             {
-                                if (currentX == 11)
+                                if (currentX == 10)
                                 {
                                     verify = false;
                                     break;
@@ -132,12 +130,13 @@ namespace Tetris
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    if (currentPiece[i].Item2 + yTotal == 20 || positionsTaken.Contains((currentPiece[i].Item1, currentPiece[i].Item2 + yTotal)))
+                                    if (currentPiece[i].Item2 + yTotal == cursorTop + 19 || positionsTaken.Contains((currentPiece[i].Item1, currentPiece[i].Item2 + yTotal)))
                                     {
                                         verify = false;
                                         break;
                                     }
                                 }
+                                Debug(yTotal);
                                 yTotal++;
                             }
                             if (yTotal == 0)
@@ -154,7 +153,6 @@ namespace Tetris
                             break;
                         case ConsoleKey.UpArrow: //ROTATE
                         case ConsoleKey.W:
-                            currentRotation++;
                             (int, int)[] result = Piece.Rotate(currentPiece, x, y);
                             if (Piece.InBounds(result))
                             {
@@ -169,7 +167,7 @@ namespace Tetris
                 bool onGround = false;
                 foreach ((int currentX, int currentY) in currentPiece)
                 {
-                    if (currentY == 20 || positionsTaken.Contains((currentX, currentY + 1)))
+                    if (currentY == cursorTop + 19 || positionsTaken.Contains((currentX, currentY + 1)))
                     {
                         onGround = true;
                         break;
@@ -186,7 +184,10 @@ namespace Tetris
                     continue; //skip going down
                 }
                 ClearPiece();
-                Console.SetCursorPosition(x * 2, y);
+                for (int i = 0; i < 4; i++)
+                {
+                    currentPiece[i] = (currentPiece[i].Item1, currentPiece[i].Item2 + 1);
+                }
                 y++;
                 RenderPiece();
             }
@@ -208,7 +209,6 @@ namespace Tetris
                 }
                 Console.SetCursorPosition(currentPiece[i].Item1 * 2, currentPiece[i].Item2);
                 Console.Write(' ');
-                currentPiece[i] = (currentPiece[i].Item1, currentPiece[i].Item2 + 1);
             }
         }
         static void RenderPiece()
@@ -251,12 +251,12 @@ namespace Tetris
             Console.ForegroundColor = color;
             debugList++;
             int previousTop = Console.CursorTop, previousLeft = Console.CursorLeft;
-            Console.SetCursorPosition(0, cursorTop + 22 + debugList);
+            Console.SetCursorPosition(30, cursorTop + debugList);
             Console.WriteLine(text);
             Console.SetCursorPosition(previousLeft, previousTop);
             Console.ForegroundColor = previous;
         }
-        public static void Debug (object obj, ConsoleColor color = ConsoleColor.Gray) => Debug(obj.ToString(), color);
+        public static void  Debug (object obj, ConsoleColor color = ConsoleColor.Gray) => Debug(obj.ToString(), color);
     }
 
     /*
