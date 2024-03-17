@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\Wordle.csproj": {}
+    "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\Wordle.csproj": {}
   },
   "projects": {
-    "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\Wordle.csproj": {
+    "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\Wordle.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\Wordle.csproj",
+        "projectUniqueName": "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\Wordle.csproj",
         "projectName": "Wordle",
-        "projectPath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\Wordle.csproj",
+        "projectPath": "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\Wordle.csproj",
         "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\obj\\",
+        "outputPath": "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"

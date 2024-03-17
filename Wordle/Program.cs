@@ -63,7 +63,7 @@
                     {
                         if (target[k] == guess[k])
                         {
-                            break;
+                            continue;
                         }
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write($"  {guess[j]}  ");

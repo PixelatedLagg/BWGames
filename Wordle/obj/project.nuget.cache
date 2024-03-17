@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ED3RCJyVUlypaXLyZa+QnlHTtckjRvqKwHkShZynjKJlxnok2WDQuxfND4h1lO4189B5xNr5tDjQym0gDgMEJA==",
+  "dgSpecHash": "UaakLRSQ95Vz5HVNDCNK9uPa34J0WwXtOTznD3jxkrFM0fIdVT9I0dyElGxqa7nhjCAKTN3LKRLDXxphDeTJAQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Wordle\\Wordle.csproj",
+  "projectFilePath": "C:\\Users\\William\\Desktop\\BWGames\\Wordle\\Wordle.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\William\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
