@@ -1,0 +1,14 @@
+C:\Users\William\Desktop\noah\bin\Debug\net8.0\noah.exe
+C:\Users\William\Desktop\noah\bin\Debug\net8.0\noah.deps.json
+C:\Users\William\Desktop\noah\bin\Debug\net8.0\noah.runtimeconfig.json
+C:\Users\William\Desktop\noah\bin\Debug\net8.0\noah.dll
+C:\Users\William\Desktop\noah\bin\Debug\net8.0\noah.pdb
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.AssemblyInfoInputs.cache
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.AssemblyInfo.cs
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.csproj.CoreCompileInputs.cache
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.dll
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\refint\noah.dll
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.pdb
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\noah.genruntimeconfig.cache
+C:\Users\William\Desktop\noah\obj\Debug\net8.0\ref\noah.dll
