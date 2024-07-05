@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "86xJGaHCk/r738Mesib8MONoxn2lnBBVWsRX38SD7yoYZsIHDaauJ49XdCYnkMWxZM/v7x5/3aAgVYNaro44/Q==",
+  "dgSpecHash": "D7yJXfxDK6webvSQrlg5IiL/SkQcWuhT9sXaJu/0fWviw6T+15+YKmDTGsWUeq/HvLQZKqXLIoDPepeV9vaK5A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Tetris\\Tetris.csproj",
+  "projectFilePath": "C:\\Users\\William\\Desktop\\BWGames\\Tetris\\Tetris.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\William\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Tetris\\Tetris.csproj",
+      "projectUniqueName": "C:\\Users\\William\\Desktop\\BWGames\\Tetris\\Tetris.csproj",
       "projectName": "Tetris",
-      "projectPath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Tetris\\Tetris.csproj",
+      "projectPath": "C:\\Users\\William\\Desktop\\BWGames\\Tetris\\Tetris.csproj",
       "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\William\\Desktop\\Paused\\BWGames\\Tetris\\obj\\",
+      "outputPath": "C:\\Users\\William\\Desktop\\BWGames\\Tetris\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -41,7 +41,7 @@ namespace Tetris
             NewPiece();
             RenderPiece();
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.CursorTop = cursorTop + 23 + debugList;
+            Console.CursorTop = cursorTop + 23;
             for (int i = 0; i < 3; i++)
             {
                 nextPieces[i] = Piece.GetCoords(cursorLeftSide, cursorLeftSide, Piece.Random());
@@ -136,8 +136,10 @@ namespace Tetris
                                         break;
                                     }
                                 }
-                                Debug(yTotal);
-                                yTotal++;
+                                if (verify)
+                                {
+                                    yTotal++;
+                                }
                             }
                             if (yTotal == 0)
                             {
@@ -244,19 +246,6 @@ namespace Tetris
             }
             return default;
         }
-        static int debugList = 0;
-        public static void Debug(string text, ConsoleColor color = ConsoleColor.Gray)
-        {
-            ConsoleColor previous = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            debugList++;
-            int previousTop = Console.CursorTop, previousLeft = Console.CursorLeft;
-            Console.SetCursorPosition(30, cursorTop + debugList);
-            Console.WriteLine(text);
-            Console.SetCursorPosition(previousLeft, previousTop);
-            Console.ForegroundColor = previous;
-        }
-        public static void  Debug (object obj, ConsoleColor color = ConsoleColor.Gray) => Debug(obj.ToString(), color);
     }
 
     /*
